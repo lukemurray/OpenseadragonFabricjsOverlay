@@ -53,8 +53,8 @@
         this._id='osd-overlaycanvas-'+counter();
         this._canvas.setAttribute('id', this._id);
         this._canvasdiv.appendChild(this._canvas);
-        this.resize();
         this._fabricCanvas=new fabric.Canvas(this._canvas);
+        this.resize();
         // disable fabric selection because default click is tracked by OSD
         this._fabricCanvas.selection=false;
         // prevent OSD click elements on fabric objects
@@ -104,12 +104,14 @@
                 this._containerWidth = this._viewer.container.clientWidth;
                 this._canvasdiv.setAttribute('width', this._containerWidth);
                 this._canvas.setAttribute('width', this._containerWidth);
+                this._fabricCanvas.setWidth(this._containerWidth);
             }
 
             if (this._containerHeight !== this._viewer.container.clientHeight) {
                 this._containerHeight = this._viewer.container.clientHeight;
                 this._canvasdiv.setAttribute('height', this._containerHeight);
                 this._canvas.setAttribute('height', this._containerHeight);
+                this._fabricCanvas.setHeight(this._containerHeight);
             }
 
         },
@@ -117,10 +119,7 @@
 
            var origin = new OpenSeadragon.Point(0, 0);
            var viewportZoom = this._viewer.viewport.getZoom(true);
-           this._fabricCanvas.setWidth(this._containerWidth);
-           this._fabricCanvas.setHeight(this._containerHeight);
            var zoom = this._viewer.viewport._containerInnerSize.x * viewportZoom / this._scale;
-           this._fabricCanvas.setZoom(zoom);
            var viewportWindowPoint = this._viewer.viewport.viewportToWindowCoordinates(origin);
            var x=Math.round(viewportWindowPoint.x);
            var y=Math.round(viewportWindowPoint.y);
@@ -128,6 +127,7 @@
 
            var pageScroll = OpenSeadragon.getPageScroll();
 
+           this._fabricCanvas.setZoom(zoom);
            this._fabricCanvas.absolutePan(new fabric.Point(canvasOffset.left - x + pageScroll.x, canvasOffset.top - y + pageScroll.y));
 
        }
