@@ -3,6 +3,7 @@
 An [OpenSeadragon](http://openseadragon.github.io) plugin that adds fabricjs overlay capability.
 
 Compatible with OpenSeadragon 2.1.0 or greater.
+Works with Fabric JS 2.4
 
 ## Documentation
 
